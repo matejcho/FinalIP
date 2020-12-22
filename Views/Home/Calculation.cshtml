@@ -1,0 +1,40 @@
+﻿
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<form method="get">
+    <label for="number">Input the temperature in Fahrenheit</label>
+    <input type="number" id="inputFahrenheit"/>
+    <button type="submit" id="calculate" >Calculate it</button>
+</form>
+
+<div>
+    <p id="result"></p>
+</div>
+<script>
+        $(document).ready(function () {
+            var input = $("#inputFahrenheit");
+            $("#calculate").on("click", function () {
+                 $.ajax({
+                     type: "GET",
+                     url:  'http://localhost:44317/api/values' + '/' + input.val(),
+                     async: true,
+                     contentType: "application/json;charset=utf-8",
+                     dataType: "json",
+                     success: function (data) {
+                         $("#result").val() = data;
+                    alert("The result is: " +data);
+                },
+                     failure: function (data) {
+                    
+                    alert(data.responseText);
+                },
+                     error: function (data) {
+                    alert(data.responseText);
+                }
+
+                });
+            });
+
+        });
+   
+</script>
